@@ -251,7 +251,9 @@ def normalize_rows(
 
 
 def atomic_write_json(path: Path, payload: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+    path.parent.chmod(0o755)
+
     fd, temp_name = tempfile.mkstemp(
         dir=path.parent,
         prefix=f".{path.name}.",
@@ -266,7 +268,10 @@ def atomic_write_json(path: Path, payload: Any) -> None:
             file.write("\n")
             file.flush()
             os.fsync(file.fileno())
+
+        temp_path.chmod(0o644)
         os.replace(temp_path, path)
+
     except Exception:
         temp_path.unlink(missing_ok=True)
         raise
