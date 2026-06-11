@@ -1,0 +1,162 @@
+:root {
+    --dashboard-bg: #f6f7fb;
+    --surface-border: #e8eaf0;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--dashboard-bg);
+}
+
+.dashboard-header {
+    background: #ffffff;
+}
+
+.signal-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 0.65rem;
+}
+
+.signal-checkbox-item {
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background: #ffffff;
+}
+
+.signal-checkbox-item:hover {
+    background: #f8f9fa;
+}
+
+.signal-checkbox-item .form-check {
+    margin: 0;
+}
+
+.signal-checkbox-item .form-check-label {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.signal-tabs-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: thin;
+}
+
+#signalTabs {
+    width: max-content;
+    min-width: 100%;
+}
+
+#signalTabs .nav-link {
+    white-space: nowrap;
+}
+
+.coin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 0.75rem;
+}
+
+.coin-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    padding: 0.85rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background: #ffffff;
+}
+
+.coin-card-symbol {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.coin-card-badges {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.25rem;
+    margin-left: 0.5rem;
+}
+
+.empty-state {
+    padding: 3rem 1rem;
+    color: #6c757d;
+    text-align: center;
+}
+
+
+#dateFilter {
+    min-height: 42px;
+    padding: 0.55rem 2.5rem 0.55rem 0.85rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    background-position: right 0.85rem center;
+    background-size: 14px 10px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    color: #212529;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease,
+            background-color 0.15s ease;
+}
+
+#dateFilter:hover {
+    border-color: #b9c2d0;
+    background-color: #fbfcfe;
+}
+
+#dateFilter:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+#dateFilter:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+#dateFilterButton {
+    min-height: 42px;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    font-weight: 600;
+}
+
+#dateFilterButton:hover,
+#dateFilterButton:focus {
+    background: #fbfcfe;
+}
+
+#dateFilterMenu {
+    max-height: 280px;
+    overflow-y: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1.25rem rgba(15, 23, 42, 0.12);
+}
+
+@media (max-width: 575.98px) {
+    .signal-checkbox-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    .coin-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

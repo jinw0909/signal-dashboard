@@ -1,0 +1,203 @@
+<!doctype html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Dashboard</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<header class="dashboard-header border-bottom">
+    <div class="container py-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <h1 class="h3 mb-1">Signal Dashboard</h1>
+                <p class="text-secondary mb-0">승률 조건별 시그널 코인 목록</p>
+            </div>
+
+            <button id="reloadButton" type="button" class="btn btn-outline-secondary">
+                새로고침
+            </button>
+        </div>
+    </div>
+
+</header>
+
+<main class="container py-4">
+    <section class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-lg-5">
+                    <label for="searchInput" class="form-label fw-semibold">
+                        검색
+                    </label>
+
+                    <input
+                            id="searchInput"
+                            type="search"
+                            class="form-control"
+                            placeholder="코인명 또는 시그널명 검색 (예: BTC, TP_5%)"
+                            autocomplete="off"
+                    >
+                </div>
+
+<!--                <div class="col-12 col-lg-3">-->
+<!--                    <label for="dateFilter" class="form-label fw-semibold">-->
+<!--                        기준 주차-->
+<!--                    </label>-->
+
+<!--                    <select id="dateFilter" class="form-select"></select>-->
+<!--                </div>-->
+                <div class="col-12 col-lg-3">
+                    <label class="form-label fw-semibold">
+                        기준 주차
+                    </label>
+
+                    <div class="dropdown">
+                        <button
+                                id="dateFilterButton"
+                                type="button"
+                                class="btn btn-light border dropdown-toggle w-100 text-start"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            주차 선택
+                        </button>
+
+                        <ul
+                                id="dateFilterMenu"
+                                class="dropdown-menu w-100"
+                        ></ul>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="form-label fw-semibold">Rate</div>
+
+                    <div
+                            id="rateFilter"
+                            class="btn-group w-100"
+                            role="group"
+                            aria-label="Rate filter"
+                    >
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-rate="all"
+                        >
+                            전체
+                        </button>
+
+                        <button
+                                type="button"
+                                class="btn btn-outline-primary"
+                                data-rate="100"
+                        >
+                            100
+                        </button>
+
+                        <button
+                                type="button"
+                                class="btn btn-outline-primary"
+                                data-rate="90"
+                        >
+                            90
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                <div>
+                    <h2 class="h5 mb-1">시그널 필터</h2>
+                    <p
+                            id="selectedSignalCount"
+                            class="small text-secondary mb-0"
+                    ></p>
+                </div>
+
+                <div class="btn-group btn-group-sm" role="group">
+                    <button
+                            id="selectAllButton"
+                            type="button"
+                            class="btn btn-outline-secondary"
+                    >
+                        전체 선택
+                    </button>
+
+                    <button
+                            id="clearAllButton"
+                            type="button"
+                            class="btn btn-outline-secondary"
+                    >
+                        전체 해제
+                    </button>
+                </div>
+            </div>
+
+            <div id="signalCheckboxes" class="signal-checkbox-grid"></div>
+        </div>
+    </section>
+
+    <section class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+                <div>
+                    <h2 class="h5 mb-1">결과</h2>
+                    <p
+                            id="resultSummary"
+                            class="small text-secondary mb-0"
+                    ></p>
+                </div>
+
+                <div
+                        id="loadingIndicator"
+                        class="d-none align-items-center gap-2 text-secondary small"
+                >
+                <span
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                ></span>
+
+                    <span>불러오는 중...</span>
+                </div>
+            </div>
+
+            <div
+                    id="errorBox"
+                    class="alert alert-danger d-none"
+                    role="alert"
+            ></div>
+
+            <div class="signal-tabs-wrapper border-bottom">
+                <ul
+                        id="signalTabs"
+                        class="nav nav-tabs flex-nowrap border-0"
+                ></ul>
+            </div>
+
+            <div id="emptyState" class="empty-state d-none">
+                조건에 맞는 코인이 없습니다.
+            </div>
+
+            <div id="coinList" class="coin-grid pt-3"></div>
+        </div>
+    </section>
+
+</main>
+
+<script src="./js/bootstrap.bundle.min.js"></script>
+
+<script src="./app.js"></script>
+
+</body>
+</html>
