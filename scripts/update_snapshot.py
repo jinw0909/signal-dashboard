@@ -227,13 +227,39 @@ def normalize_rows(
     if not grouped_symbols:
         raise SnapshotUpdateError("No result rows were returned by the API")
 
-    if len(snapshot_dates) != 1:
-        raise SnapshotUpdateError(
-            "API returned multiple snapshot dates in a single run: "
-            + ", ".join(sorted(snapshot_dates))
+    # if len(snapshot_dates) != 1:
+    #     raise SnapshotUpdateError(
+    #         "API returned multiple snapshot dates in a single run: "
+    #         + ", ".join(sorted(snapshot_dates))
+    #     )
+    #
+    # snapshot_date = next(iter(snapshot_dates))
+
+    if not snapshot_dates:
+        raise SnapshotUpdateError("No snapshot dates were found")
+
+    if len(snapshot_dates) > 1:
+        LOGGER.warning(
+            "API returned multiple snapshot dates in a single run: %s. Using latest only.",
+            ", ".join(sorted(snapshot_dates)),
         )
 
-    snapshot_date = next(iter(snapshot_dates))
+    snapshot_date = max(snapshot_dates)
+
+    # normalized_rows = [
+    #     {
+    #         "signal": signal,
+    #         "datetime": datetime_by_key[(date, rate, signal)],
+    #         "rate": rate,
+    #         "symbols": sorted(grouped_symbols[(date, rate, signal)]),
+    #     }
+    #     for date, rate, signal in sorted(
+    #         grouped_symbols,
+    #         key=lambda key: (-key[1], key[2]),
+    #     )
+    # ]
+
+
     normalized_rows = [
         {
             "signal": signal,
@@ -245,6 +271,7 @@ def normalize_rows(
             grouped_symbols,
             key=lambda key: (-key[1], key[2]),
         )
+        if date == snapshot_date
     ]
 
     return snapshot_date, normalized_rows
